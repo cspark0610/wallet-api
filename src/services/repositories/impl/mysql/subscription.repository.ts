@@ -4,14 +4,14 @@ import { SubscriptionRepository } from '../../subscription.repository';
 
 export class SubscriptionMySQLRepository implements SubscriptionRepository {
 	public async all(): Promise<Subscription[]> {
-		const rows = await connector.execute('SELECT * FROM wallet_subscription ORDER BY id DESC');
-		return rows as unknown as Subscription[];
+		const [rows] = await connector.execute('SELECT * FROM wallet_subscription ORDER BY id DESC');
+		return rows as Subscription[];
 	}
 
 	public async find(id: Number): Promise<Subscription | null> {
-		const rows = await connector.execute('SELECT * FROM wallet_subscription WHERE id = ?', [id]);
-		if (rows) {
-			return rows as unknown as Subscription;
+		const [rows]: any[] = await connector.execute('SELECT * FROM wallet_subscription WHERE id = ?', [id]);
+		if (rows.length) {
+			return rows[0] as Subscription;
 		}
 		return null;
 	}
@@ -36,12 +36,12 @@ export class SubscriptionMySQLRepository implements SubscriptionRepository {
 	}
 
 	public async findByUserAndCode(user_id: Number, code: string): Promise<Subscription | null> {
-		const rows = await connector.execute('SELECT * FROM wallet_subscription WHERE user_id = ? AND code = ?', [
+		const [rows]: any[] = await connector.execute('SELECT * FROM wallet_subscription WHERE user_id = ? AND code = ?', [
 			user_id,
 			code,
 		]);
-		if (rows) {
-			return rows as unknown as Subscription;
+		if (rows.length) {
+			return rows[0] as Subscription;
 		}
 		return null;
 	}

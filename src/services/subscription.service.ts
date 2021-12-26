@@ -27,10 +27,11 @@ export class SubscriptionService {
 	public async update(id: Number, entry: SubscriptionUpdateDto): Promise<void> {
 		let originalEntry = await this.subscriptionRepository.find(id);
 		if (originalEntry) {
-			//pisar el entry encontrado con los nuevios valores provenientes del updateDto
+			//pisar el entry encontrado con los nuevios valores provenientes del updateDto y llamar al metido del repositorio correspondiente
 			originalEntry.code = entry.code;
 			originalEntry.amount = entry.amount;
 			originalEntry.cron = entry.cron;
+			await this.subscriptionRepository.update(originalEntry);
 		} else {
 			throw new ApplicationException('Subscription not found');
 		}
