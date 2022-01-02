@@ -36,5 +36,7 @@ export class SubscriptionService {
 			throw new ApplicationException('Subscription not found');
 		}
 	}
-	public async remove(id: Number): Promise<void> {}
+	public async remove(id: Number): Promise<void> {
+		await this.subscriptionRepository.remove(id);
+	}
 }

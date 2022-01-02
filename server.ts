@@ -1,6 +1,7 @@
 import { app } from './app';
 
 //aca se levanta el servidor
-app.listen(4000, () => {
-	console.log('Servidor corriendo en el puerto 4000');
+const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+	console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
