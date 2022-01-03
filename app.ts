@@ -1,21 +1,24 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.env.APP_ENV = process.env.APP_ENV || 'development';
+//import { TestService } from './src/services/test.service';
+//const testService = container.resolve<TestService>('testService');
+//console.log('testService', testService.get());
 
 import express = require('express');
 import dotenv = require('dotenv');
 import { loadControllers } from 'awilix-express';
 import loadContainer from './container';
-//import { TestService } from './src/services/test.service';
+import cors = require('cors');
+
 dotenv.config({
 	path: `${__dirname}/../config/${process.env.APP_ENV}.env`,
 });
 
-//console.log(process.env.APP_FOO);
-
 const app: express.Application = express();
-
-//const testService = container.resolve<TestService>('testService');
-//console.log('testService', testService.get());
+//json support
+app.use(express.json());
+//cors support
+app.use(cors());
 
 // LOAD container
 loadContainer(app);
